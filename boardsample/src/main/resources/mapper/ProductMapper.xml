@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="com.example.productReg.ProductMapper"> 
+<!-- 상품 입력 -->
+<insert id="insertProduct" parameterType="com.example.productReg.ProductDomain" useGeneratedKeys="true">   
+  keyProperty="ID">
+	INSERT INTO td_product(PNAME,COUNT,PRICE,SIZE,WEIGHT,from_nation,to_nation,SIZENAME,WEIGHTNAME,FROMNATIONNAME,TONATIONNAME,URL,IMAGE,TITLE,SHPRICE,SHCURRENCY) VALUES(#{pname},#{count},#{price},#{size},#{weight},#{from_nation},#{to_nation},#{strSIZE},#{strWEIGHT},#{strFROM_NATION},#{strTO_NATION},#{url},#{og_image},#{og_title},#{urlprice},#{currency})
+</insert>
+<!-- 상품 목록보기 -->
+<select id="listProduct" resultType="com.example.productReg.ProductDomain">
+	SELECT
+		ID AS ID,
+		PNAME AS pname,
+		PRICE AS price,
+		IMAGE AS og_image,
+		FROMNATIONNAME AS strFROM_NATION,
+		TONATIONNAME AS strTO_NATION
+	FROM td_product
+	ORDER BY ID
+</select>
+
+<!-- 상품 상세보기 -->
+<select id="detailProduct" resultType="com.example.productReg.ProductDomain">
+	SELECT
+		ID AS ID,
+		PNAME AS pname,
+		COUNT AS count,
+		PRICE AS price,
+		SIZENAME AS strSIZE,
+		WEIGHTNAME AS strWEIGHT,
+		FROMNATIONNAME AS strFROM_NATION,
+		TONATIONNAME AS strTO_NATION, 
+		TITLE AS og_title,
+		IMAGE AS og_image,
+		URL AS og_url,
+		SHPRICE AS urlprice,
+		SHCURRENCY AS currency
+	FROM td_product
+	WHERE ID=#{ID}
+</select>
+</mapper>

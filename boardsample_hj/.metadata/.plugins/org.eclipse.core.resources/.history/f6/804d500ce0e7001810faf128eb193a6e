@@ -1,0 +1,27 @@
+package com.example.main;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.example.productReg.productController;
+
+@Controller //현재 클래스를 스프링에서 관리하는 컨트롤러 bean으로 생성
+@RequestMapping("/mainPage/*")
+
+public class mainController {
+	//로깅을 위한 변수
+	private static final Logger logger = LoggerFactory.getLogger(productController.class);
+		
+	@RequestMapping(value="main", produces="text/plain;charset=UTF-8")
+	public ModelAndView read() throws Exception{
+		ModelAndView popupPageR = new ModelAndView("home/home");
+		popupPageR.addObject("fromNation",ProductService.findAllfromNations());
+		popupPageR.addObject("toNation",ProductService.findAlltoNations());
+		popupPageR.addObject("SIZE",ProductService.findAllSizes());
+		popupPageR.addObject("WEIGHT",ProductService.findAllWeights());
+		return popupPageR;
+	}
+}
